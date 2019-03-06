@@ -131,7 +131,7 @@ namespace Reproductor
 
                 volume = new EfectoVolumen(fades);
 
-                //volume.Volume = (float)sldVolumen.Value;
+                volume.Volume = (float)sldVolumen.Value;
                 
                 output.Init(volume);
                 output.Play();
@@ -212,17 +212,12 @@ namespace Reproductor
         {
             if (volume != null && output != null && output.PlaybackState != PlaybackState.Stopped)
             {
-
-                //volume.Volume = (float)sldVolumen.Value;
-                
-
+                volume.Volume = (float)sldVolumen.Value;
             }
 
             if (lblPorcentajeVolumen != null)
             {
-
                 lblPorcentajeVolumen.Text = ((int)(sldVolumen.Value * 100)).ToString() + "%";
-
             }
 
         }
