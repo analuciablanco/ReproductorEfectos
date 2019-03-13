@@ -23,6 +23,8 @@ namespace Reproductor
 
         private int cantidadMuestrasBorradas = 0;
 
+        public bool Activo { get; set; }
+
         public WaveFormat WaveFormat
         {
             get
@@ -61,12 +63,15 @@ namespace Reproductor
                 cantidadMuestrasBorradas += diferencia;
             }
 
-            // Aplicamos el efecto.
-            if (milisegundosTranscurridos > OffsetMilisegundos)
+            if (Activo) // Si el checkbox está activo realiza lo siguiente:
             {
-                for (int i = 0; i < read; i++)
+                // Aplicamos el efecto.
+                if (milisegundosTranscurridos > OffsetMilisegundos)
                 {
-                    buffer[offset + i] += bufferDelay[cantidadMuestrasTranscurridas - cantidadMuestrasBorradas + i - cantidadMuestrasOffset];
+                    for (int i = 0; i < read; i++)
+                    {
+                        buffer[offset + i] += bufferDelay[cantidadMuestrasTranscurridas - cantidadMuestrasBorradas + i - cantidadMuestrasOffset];
+                    }
                 }
             }
 

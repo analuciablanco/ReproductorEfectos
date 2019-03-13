@@ -119,12 +119,16 @@ namespace Reproductor
                 reader = new AudioFileReader(txtRutaArchivo.Text);
 
                 delay = new Delay(reader);
-
+                delay.Activo = (bool)cbDelayActivo.IsChecked;
+                
                 fades = new FadeInOutSampleProvider(delay, true);
                 double milisegundosFadeIn = Double.Parse(txtDuracionFadeIn.Text) * 1000.0;
-                fades.BeginFadeIn(milisegundosFadeIn);
-
+                fades.BeginFadeIn(milisegundosFadeIn); 
+                
                 fadingOut = false;
+
+                volume = new EfectoVolumen(fades);
+                volume.Volume = (float)sldVolumen.Value;
 
                 output = new WaveOutEvent();
 
@@ -132,11 +136,8 @@ namespace Reproductor
 
                 output.PlaybackStopped += Output_PlaybackStopped;
 
-                volume = new EfectoVolumen(fades);
-
-                volume.Volume = (float)sldVolumen.Value;
-                
                 output.Init(volume);
+
                 output.Play();
 
                 btnDetener.IsEnabled = true;
@@ -239,6 +240,19 @@ namespace Reproductor
 
         }
 
+        private void SldDelayOffset_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+
+        }
+
+        private void CbDelayActivo_Click(object sender, RoutedEventArgs e)
+        {
+            if (cbDelayActivo.IsChecked == true)
+            {
+                delay.Activo = true;
+            }
+            else delay.Activo = false;
+        }
     }
     
 }
