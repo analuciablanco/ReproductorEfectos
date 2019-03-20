@@ -105,13 +105,10 @@ namespace Reproductor
         {
             if (output != null && output.PlaybackState == PlaybackState.Paused)
             {
-
                 output.Play();
                 btnDetener.IsEnabled = true;
                 btnPausa.IsEnabled = true;
                 btnReproducir.IsEnabled = false;
-
-
             }
             else
             {
@@ -120,6 +117,7 @@ namespace Reproductor
 
                 delay = new Delay(reader);
                 delay.Activo = (bool)cbDelayActivo.IsChecked;
+                delay.OffsetMilisegundos = (int)sldDelayOffset.Value;
                 
                 fades = new FadeInOutSampleProvider(delay, true);
                 double milisegundosFadeIn = Double.Parse(txtDuracionFadeIn.Text) * 1000.0;
@@ -242,16 +240,23 @@ namespace Reproductor
 
         private void SldDelayOffset_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
+            if (lblDelayOffset != null)
+            {
+                lblDelayOffset.Text = sldDelayOffset.Value.ToString() + " ms";
+            }          
 
+            if (delay != null)
+            {
+                delay.OffsetMilisegundos = (int)sldDelayOffset.Value;
+            }
         }
 
         private void CbDelayActivo_Click(object sender, RoutedEventArgs e)
         {
-            if (cbDelayActivo.IsChecked == true)
+            if (delay != null)
             {
-                delay.Activo = true;
+                delay.Activo = (bool)cbDelayActivo.IsChecked;
             }
-            else delay.Activo = false;
         }
     }
     
