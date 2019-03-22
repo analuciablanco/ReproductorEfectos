@@ -118,6 +118,7 @@ namespace Reproductor
                 delay = new Delay(reader);
                 delay.Activo = (bool)cbDelayActivo.IsChecked;
                 delay.OffsetMilisegundos = (int)sldDelayOffset.Value;
+                delay.ganancia = (float)sldDelayGanancia.Value;
                 
                 fades = new FadeInOutSampleProvider(delay, true);
                 double milisegundosFadeIn = Double.Parse(txtDuracionFadeIn.Text) * 1000.0;
@@ -256,6 +257,20 @@ namespace Reproductor
             if (delay != null)
             {
                 delay.Activo = (bool)cbDelayActivo.IsChecked;
+            }
+        }
+
+        private void SldDelayGanancia_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+
+            if (lblDelayGanancia != null)
+            {
+                lblDelayGanancia.Text = sldDelayGanancia.Value.ToString();
+            }
+
+            if (delay != null)
+            {
+                delay.ganancia = (float)sldDelayGanancia.Value;
             }
         }
     }

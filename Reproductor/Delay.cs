@@ -12,6 +12,8 @@ namespace Reproductor
     {
         private ISampleProvider fuente;
         private int offsetMilisegundos;
+
+        public float ganancia;
         public int OffsetMilisegundos {
             get {
                 return offsetMilisegundos;
@@ -80,7 +82,7 @@ namespace Reproductor
                 {
                     for (int i = 0; i < read; i++)
                     {
-                        buffer[offset + i] += bufferDelay[cantidadMuestrasTranscurridas - cantidadMuestrasBorradas + i - cantidadMuestrasOffset];
+                        buffer[offset + i] += bufferDelay[cantidadMuestrasTranscurridas - cantidadMuestrasBorradas + i - cantidadMuestrasOffset] * ganancia;
                     }
                 }
             }
